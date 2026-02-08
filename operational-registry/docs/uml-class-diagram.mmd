@@ -1,8 +1,26 @@
 classDiagram
-class MainStep1 {
-  +main(args: String[])
+class Notifier {
+  <<interface>>
+  +notifyResult(message: String)*
+}
+class ConsoleNotifier {
+  +notifyResult(message: String)
+}
+class FileNotifier {
+  -filePath: String
+  +FileNotifier(filePath: String)
+  +notifyResult(message: String)
 }
 class CalculatorService {
-  +calculate(op: String, a: double, b: double) double
+  +CalculatorService(notifier: Notifier)
+  +calculateAndNotify(op: String, a: double, b: double) void
 }
-MainStep1 --> CalculatorService
+class MainStep2 {
+  +main(args: String[])
+}
+
+Notifier <|.. ConsoleNotifier
+Notifier <|.. FileNotifier
+CalculatorService --> Notifier
+MainStep2 --> CalculatorService
+MainStep2 ..> Notifier

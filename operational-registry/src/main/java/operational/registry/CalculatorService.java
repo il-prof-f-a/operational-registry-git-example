@@ -3,20 +3,34 @@ package operational.registry;
 
 public class CalculatorService {
 
-    public double calculate(String op, double a, double b) {
+    private Notifier notifier;
+
+    public CalculatorService(Notifier notifier) {
+        this.notifier = notifier;
+    }
+
+    public void calculateAndNotify(String op, double a, double b) {
+        double result;
+
         switch (op) {
-            case "+" -> { return a + b; }
-            case "-" -> { return a - b; }
-            case "*" -> { return a * b; }
+            case "+" -> result = a + b;
+            case "-" -> result = a - b;
+            case "*" -> result = a * b;
             case "/" -> {
                 if (b == 0) {
-                    throw new IllegalArgumentException("Divisione per zero");
+                    notifier.notifyResult("Errore: divisione per zero");
+                    return;
                 }
-                return a / b;
+                result = a / b;
             }
-            case "%" -> { return a % b; }
-            case "^" -> { return Math.pow(a, b); }
-            default -> throw new IllegalArgumentException("Operazione non supportata: " + op);
+            case "%" -> result = a % b;
+            case "^" -> result = Math.pow(a, b);
+            default -> {
+                notifier.notifyResult("Operazione non supportata: " + op);
+                return;
+            }
         }
+
+        notifier.notifyResult(a + " " + op + " " + b + " = " + result);
     }
 }

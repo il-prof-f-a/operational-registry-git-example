@@ -10,8 +10,29 @@ public class Main {
         double a = Double.parseDouble(args[0]);
         double b = Double.parseDouble(args[2]);
 
-        double result = 0;
+        double result;
 
-        System.out.println("Parametri: a = " + a + ", op = " + op + ", b = " + b + " => " + result);
+        if (op.equals("+")) {
+            result = a + b;
+        } else if (op.equals("-")) {
+            result = a - b;
+        } else if (op.equals("*")) {
+            result = a * b;
+        } else if (op.equals("/")) {
+            if (b == 0) {
+                System.out.println("Errore: divisione per zero!");
+                return;
+            }
+            result = a / b;
+        } else if (op.equals("%")) {
+            result = a % b;
+        } else if (op.equals("^")) {
+            result = Math.pow(a, b);
+        } else {
+            System.out.println("Operazione non supportata");
+            return;
+        }
+
+        System.out.println("Risultato: a = " + a + ", op = " + op + ", b = " + b + " => " + a + " " + op + " " + b + " = " + result);
     }
 }

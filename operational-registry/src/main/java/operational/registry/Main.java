@@ -6,10 +6,12 @@ public class Main {
             System.out.println("Uso: java MainSpaghetti <a> <op> <b>");
             return;
         }
-        String a = args[0];
         String op = args[1];
-        String b = args[2];
+        double a = Double.parseDouble(args[0]);
+        double b = Double.parseDouble(args[2]);
 
-        System.out.println("Parametri: a = " + a + ", op = " + op + ", b = " + b);
+        double result = 0;
+
+        System.out.println("Parametri: a = " + a + ", op = " + op + ", b = " + b + " => " + result);
     }
 }

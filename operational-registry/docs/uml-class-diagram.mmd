@@ -1,26 +1,40 @@
 classDiagram
 class Notifier {
   <<interface>>
-  +notifyResult(message: String)*
-}
-class ConsoleNotifier {
   +notifyResult(message: String)
 }
-class FileNotifier {
-  -filePath: String
-  +FileNotifier(filePath: String)
-  +notifyResult(message: String)
+
+class BinaryOperation {
+  +BinaryOperation(notifier: Notifier)
+  +execute(a: double, b: double) void
+  +validate(a: double, b: double) boolean
+  +onValidationError(a: double, b: double) void
+  +formatMessage(a: double, b: double, result: double) String
+  +compute(a: double, b: double) double*
+  +getSymbol() String*
 }
-class CalculatorService {
-  +CalculatorService(notifier: Notifier)
-  +calculateAndNotify(op: String, a: double, b: double) void
+
+class SumOperation {
+  +SumOperation(notifier: Notifier)
+  +compute(a: double, b: double) double
+  +getSymbol() String
 }
-class MainStep2 {
+
+class DivideOperation {
+  +DivideOperation(notifier: Notifier)
+  +validate(a: double, b: double) boolean
+  +onValidationError(a: double, b: double) void
+  +compute(a: double, b: double) double
+  +getSymbol() String
+}
+
+class MainStep3 {
   +main(args: String[])
 }
 
-Notifier <|.. ConsoleNotifier
-Notifier <|.. FileNotifier
-CalculatorService --> Notifier
-MainStep2 --> CalculatorService
-MainStep2 ..> Notifier
+Notifier <|-- ConsoleNotifier
+Notifier <|-- FileNotifier
+BinaryOperation <|-- SumOperation
+BinaryOperation <|-- DivideOperation
+MainStep3 --> BinaryOperation : mappa
+BinaryOperation --> Notifier

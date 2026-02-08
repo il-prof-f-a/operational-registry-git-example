@@ -3,36 +3,21 @@ package operational.registry;
 public class Main {
     public static void main(String[] args) {
         if (args.length < 3) {
-            System.out.println("Uso: java MainSpaghetti <a> <op> <b>");
+            System.out.println("Uso: java MainStep1 <op> <a> <b>");
             return;
         }
+
         String op = args[1];
         double a = Double.parseDouble(args[0]);
         double b = Double.parseDouble(args[2]);
 
-        double result;
+        CalculatorService calc = new CalculatorService();
 
-        if (op.equals("+")) {
-            result = a + b;
-        } else if (op.equals("-")) {
-            result = a - b;
-        } else if (op.equals("*")) {
-            result = a * b;
-        } else if (op.equals("/")) {
-            if (b == 0) {
-                System.out.println("Errore: divisione per zero!");
-                return;
-            }
-            result = a / b;
-        } else if (op.equals("%")) {
-            result = a % b;
-        } else if (op.equals("^")) {
-            result = Math.pow(a, b);
-        } else {
-            System.out.println("Operazione non supportata");
-            return;
+        try {
+            double result = calc.calculate(op, a, b);
+            System.out.println("Risultato: " + result);
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Errore: " + ex.getMessage());
         }
-
-        System.out.println("Risultato: a = " + a + ", op = " + op + ", b = " + b + " => " + a + " " + op + " " + b + " = " + result);
     }
 }
